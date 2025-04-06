@@ -619,3 +619,14 @@
         
         dropArea.addEventListener('dragleave', () => {
             dropArea.classList.
+Image Compressor
+Drag & Drop an image here
+
+or
+
+Select File
+<script> const dropArea = document.getElementById("drop-area"); const fileInput = document.getElementById("fileElem"); const preview = document.getElementById("preview"); ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => { dropArea.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }); }); dropArea.addEventListener("drop", handleDrop, false); fileInput.addEventListener("change", handleFiles, false); function handleDrop(e) { const dt = e.dataTransfer; const files = dt.files; handleFiles({ target: { files } }); } function handleFiles(e) { const files = e.target.files; if (!files.length) return; const file = files[0]; if (!file.type.startsWith("image/")) { alert("Please upload an image file."); return; } const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.src = event.target.result; img.onload = function() { const canvas = document.createElement("canvas"); const scale = 0.5; // Compress to 50% canvas.width = img.width * scale; canvas.height = img.height * scale; const ctx = canvas.getContext("2d"); ctx.drawImage(img, 0, 0, canvas.width, canvas.height); canvas.toBlob(blob => { const compressedUrl = URL.createObjectURL(blob); preview.innerHTML = `
+Compressed Image Preview:
+Compressed Image
+
+`; }, "image/jpeg", 0.7); // Adjust quality (0.1–1) }; }; reader.readAsDataURL(file); } </script>
