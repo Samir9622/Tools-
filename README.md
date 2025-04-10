@@ -616,5 +616,4 @@
             e.preventDefault();
             dropArea.classList.add('active');
         });
-        
-        dropArea.addEventListener('dragleave', () => 
+ 
